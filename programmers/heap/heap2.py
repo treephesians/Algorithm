@@ -21,7 +21,14 @@ def solution(jobs):
                 else:
                     jobs.insert(0, job)
                     break
-        
+                
+        if not running:
+            if waiting_heap:
+                waiting_job = heapq.heappop(waiting_heap)
+                arrival_time = waiting_job[1]
+                end_time = time + waiting_job[0]
+                running = True
+                
         # 한 process의 time이 끝날 때,
         # turnaround time 을 계산하고, waiting heap에 있는 process를 실행시킴
         if time == end_time:
