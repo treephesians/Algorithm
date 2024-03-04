@@ -1,32 +1,35 @@
-def solution(N, number):
-    if N == number:
-        return 1
-    
-    # dp 리스트 초기화. dp[i]는 N을 i번 사용해서 만들 수 있는 숫자들의 집합
-    dp = [set() for _ in range(9)]
-    print(dp)
-    dp[1].add(N)
+def solution(n, m, x, y, queries):
+    def simulate_query(start_x, start_y, dx, dy):
+        current_x, current_y = start_x, start_y
+        while True:
+            current_x += dx
+            current_y += dy
+            if current_x < 0 or current_x >= n or current_y < 0 or current_y >= m:
+                break
+        return current_x, current_y
 
-    for i in range(2, 9):
-        # N을 i번 연속해서 붙인 숫자를 추가 (예: 55, 555)
-        dp[i].add(int(str(N) * i))
+    count = 0
+    for i in range(n):
+        for j in range(m):
+            current_x, current_y = i, j
+            for query in queries:
+                direction, distance = query
+                if direction == 0:
+                    current_y -= distance
+                elif direction == 1:
+                    current_y += distance
+                elif direction == 2:
+                    current_x -= distance
+                elif direction == 3:
+                    current_x += distance
+                current_x = max(0, min(current_x, n - 1))
+                current_y = max(0, min(current_y, m - 1))
 
-        for j in range(1, i):
-            for a in dp[j]:
-                for b in dp[i - j]:
-                    # 사칙연산 적용
-                    dp[i].add(a + b)
-                    dp[i].add(a - b)
-                    dp[i].add(a * b)
-                    if b != 0:
-                        dp[i].add(a // b)
-            
-            # number를 찾으면 바로 반환
-            if number in dp[i]:
-                return i
-    
-    return -1  # 8번 이내에 찾지 못한 경우
+            if current_x == x and current_y == y:
+                count += 1
+
+    return count
 
 # 예시 테스트
-print(solution(5, 12))  # 4 반환 예시
-print(solution(2, 11))  # 3 반환 예시 (2+2+2*2+2/2)
+print(solution(2, 2, 0, 0, [[2,1],[0,1],[1,1],[0,1],[2,1]]))  # 기대 출력: 4
+print(solution(2, 5, 0, 1, [[3,1],[2,2],[1,1],[2,3],[0,1],[2,1]]))  # 기대 출력: 2
