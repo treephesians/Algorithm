@@ -1,5 +1,6 @@
 import sys
 
+# yeah
 A, B, C = map(int, sys.stdin.readline().split())
 
 def f(A, B, C):
