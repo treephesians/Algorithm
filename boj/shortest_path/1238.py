@@ -35,10 +35,10 @@ from_X_to_N = dijkstra(X)
 for i in range(1, N + 1):
      from_N_to_X[i] = dijkstra(i)[X]
 
-result = 0
+res = 0
 for i in range(1, N + 1):
      cost = from_N_to_X[i] + from_X_to_N[i]
-     if cost > result:
-          result = cost
+     if cost > res:
+          res = cost
 
-print(result)
+print(res)
