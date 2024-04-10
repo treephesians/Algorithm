@@ -11,7 +11,7 @@ for _ in range(M):
      start, end, time = map(int, sys.stdin.readline().split())
      graph[start].append((end, time))
      
-def dijkstra(start):
+def dijkstras(start):
      
      queue = []
      heapq.heappush(queue, (0, start))
@@ -30,10 +30,10 @@ def dijkstra(start):
 
 from_N_to_X = [0 for _ in range(N + 1)]
 
-from_X_to_N = dijkstra(X)
+from_X_to_N = dijkstras(X)
 
 for i in range(1, N + 1):
-     from_N_to_X[i] = dijkstra(i)[X]
+     from_N_to_X[i] = dijkstras(i)[X]
 
 res = 0
 for i in range(1, N + 1):
