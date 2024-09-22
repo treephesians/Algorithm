@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "example",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "/downloads/example.py",
+      "console": "integratedTerminal",
+      "python": "/opt/homebrew/anaconda3",
+      "env": {
+        "HYDRA_FULL_ERROR": "1",
+        "TOKENIZERS_PARALLELISM": "false",
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "args": [
+        "--model_name",
+        "bert-base-uncased",
+        "--output_dir",
+        "./outputs"
+      ],
+      "justMyCode": false
+    }
+  ]
+}
