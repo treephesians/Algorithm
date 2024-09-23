@@ -2,11 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "example",
+      "name": "ps",
       "type": "debugpy",
       "request": "launch",
       "program": "/downloads/example.py",
-      "console": "integratedTerminal",
+      "console": "internalConsole",
       "python": "/opt/homebrew/anaconda3",
       "env": {
         "HYDRA_FULL_ERROR": "1",
