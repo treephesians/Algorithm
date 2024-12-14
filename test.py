@@ -1,49 +1,33 @@
 import sys
 
-def is_all_blue(row, col, n, matrix):
-    for i in range(n):
-        for j in range(n):
-            if matrix[row + i][col + j] != 1:
-                return 0
-    return 1
+input = sys.stdin.readline
 
-def is_all_white(row, col, n, matrix):
-    for i in range(n):
-        for j in range(n):
-            if matrix[row + i][col + j] != 0:
-                return 0
-    return 1
+N = int(input())
+# o o o o
+# o o o o
+# o o o o
+# o o o o
+count = 0
+col_arr = [True for _ in range(N)]
+plus_diagonal = [True for _ in range(2 * N - 1)]
+minus_diagonal = [True for _ in range(2 * N - 1)]
 
-def divide_and_conquer(row, col, n, matrix, n_blue, n_white):
-    if is_all_blue(row, col, n, matrix):
-        n_blue += 1
-    elif is_all_white(row, col, n, matrix):
-        n_white += 1
-    else:
-        # Divide the current square into 4 parts and conquer each
-        half_n = n // 2
-        n_blue, n_white = divide_and_conquer(row, col, half_n, matrix, n_blue, n_white)
-        n_blue, n_white = divide_and_conquer(row, col + half_n, half_n, matrix, n_blue, n_white)
-        n_blue, n_white = divide_and_conquer(row + half_n, col, half_n, matrix, n_blue, n_white)
-        n_blue, n_white = divide_and_conquer(row + half_n, col + half_n, half_n, matrix, n_blue, n_white)
-    return n_blue, n_white
+def nQueens(row, col, col_arr, plus_diagonal, minus_diagonal):
+    global count
+    if row == N - 1:
+        count += 1
+        return
+    col_arr[col] = False
+    plus_diagonal[row + col] = False
+    minus_diagonal[row - col] = False
+    for i in range(N):
+        if col_arr[i] and plus_diagonal[row + 1 + i] and minus_diagonal[row + 1 - i]:
+            nQueens(row + 1, i, col_arr, plus_diagonal, minus_diagonal)
+    col_arr[col] = True
+    plus_diagonal[row + col] = True
+    minus_diagonal[row - col] = True
 
-# Assuming N and matrix are given as input in the correct format
-# For demonstration, replace the sys.stdin.readline() with some fixed values
-# N = int(input())
-# matrix = []
-# for i in range(N):
-#     row = list(map(int, input().split()))
-#     matrix.append(row)
+for col in range(N):
+    nQueens(0, col, col_arr, plus_diagonal, minus_diagonal)
 
-n_blue = 0
-n_white = 0
-
-# Example input, replace with the actual input mechanism
-N = 8
-matrix = [[1, 1, 0, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 0, 1, 1], [0, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 1, 1, 1], [0, 1, 0, 0, 1, 1, 1, 1], [0, 0, 1, 1, 1, 1, 1, 1], [0, 0, 1, 1, 1, 1, 1, 1]]
-print(matrix)
-n_blue, n_white = divide_and_conquer(0, 0, N, matrix, n_blue, n_white)
-
-print(n_white)
-print(n_blue)
+print(count)

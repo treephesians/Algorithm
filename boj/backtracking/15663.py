@@ -1,37 +1,32 @@
+# https://www.acmicpc.net/problem/15663
 import sys
 
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-
-arr = []
-for i in map(int, input().split()):
-    arr.append(i)
-
+arr = list(map(int, input().split()))
 arr.sort()
 
 result = []
-answer = []
+visited = [False for _ in range(N)]
 
-def sion(i):
-    result.append(arr[i])
+def backtracking(n):
+    result.append(arr[n])
+    visited[n] = True
     if len(result) == M:
-        answer.append("".join(map(str, result)))
+        print(" ".join(map(str, result)))
         result.pop()
-    else:
-        for j in range(len(arr)):
-            if i != j:
-                sion(j)
-                result.pop()
-        result.pop()
+        visited[n] = False
+        return
+    before = 0
+    for i in range(N):
+        if not visited[i] and arr[i] != before:
+            backtracking(i)
+            before = arr[i]
+    result.pop()    
+    visited[n] = False
 
-beforeNum = 0
-for i in range(len(arr)):
-    if arr[i] != beforeNum:
-        sion(i)
-    beforeNum = i
-
-answer = sorted(list(set(map(int, answer))))
-for i in answer:
-    print(" ".join(list(str(i))))
-
+for i in range(N):
+    if i >= 1 and arr[i] == arr[i - 1]:
+        continue
+    backtracking(i)
