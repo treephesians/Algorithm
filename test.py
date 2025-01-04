@@ -3,27 +3,30 @@ from collections import deque
 
 input = sys.stdin.readline
 
-N = int(input())
+N, K = map(int, input().split())
 
-graph = [[] for _ in range(N + 1)]
-visited = [False for _ in range(N + 1)]
-result = [0 for _ in range(N + 1)]
-for _ in range(N - 1):
-    a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
+INF = int(1e9)
+arr = [INF for _ in range(100001)]
+arr[N] = 0
+visited = [False for _ in range(100001)]
+visited[N] = True
 
-q = deque([1])
+q = deque([N])
 
 while q:
     now = q.popleft()
-    if not visited[now]:
-        visited[now] = True
-        for next in graph[now]:
-            if not visited[next]:
-                result[next] = now
-                q.append(next)
-
-for i in range(2, N + 1):
-    print(result[i])
-
+    if now == K:
+        print(arr[now])
+        exit()
+    if now * 2 <= 100000 and not visited[now * 2]:
+        arr[now * 2] = arr[now]
+        visited[now * 2] = True
+        q.appendleft(now * 2)
+    if now - 1 >= 0 and not visited[now - 1]:
+        arr[now - 1] = arr[now] + 1
+        visited[now - 1] = True
+        q.append(now - 1)
+    if now + 1 <= 100000 and not visited[now + 1]:
+        arr[now + 1] = arr[now] + 1
+        visited[now + 1] = True
+        q.append(now + 1)
