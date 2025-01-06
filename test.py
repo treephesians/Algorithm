@@ -2,20 +2,17 @@ import sys
 
 input = sys.stdin.readline
 
-N, K = map(int, input().split())
+N, M = map(int, input().split())
 
-arr = [0 * (K + 1)]
-for _ in range(N):
-    W, V = map(int, input().split())
-    arr[W] = max(arr[W], V)
+arr = []
+def backtracking(n):
+    arr.append(n)
+    if len(arr) == M:
+        print(*arr)
+    else:
+        for i in range(n + 1, N + 1):
+            backtracking(i)
+    arr.pop()
 
-
-'''
-6 6
-4 8
-3 6
-2 5
-1 2
-5 6
-'''
-    
+for i in range(1, N + 1):
+    backtracking(i)
