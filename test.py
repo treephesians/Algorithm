@@ -1,18 +1,24 @@
 import sys
+from collections import deque
 
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
+N = int(input())
 
 arr = []
-def backtracking(n):
-    arr.append(n)
-    if len(arr) == M:
-        print(*arr)
-    else:
-        for i in range(n + 1, N + 1):
-            backtracking(i)
-    arr.pop()
 
-for i in range(1, N + 1):
-    backtracking(i)
+for _ in range(N):
+    start, end = map(int, input().split())
+    arr.append((end, start))
+
+arr.sort()
+time = 0
+answer = 0
+
+while arr:
+    end, start = arr.pop(0)
+    if start >= time:
+        answer += 1
+        time = end
+
+print(answer)
