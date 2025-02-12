@@ -28,3 +28,24 @@ function solution(n) {
 }
 
 console.log(solution(4))
+
+// 다른 사람들 답 좋은 거!
+// function hanoi(n) {    
+//     var answer = [];
+
+//     sol(n, 1, 2, 3);
+
+//     function sol(n, A, B, C) {
+//         if (n == 1) answer.push([A,C]);
+//         else {
+//             sol(n - 1, A, C, B);
+//             answer.push([A,C]);                 
+//             sol(n - 1, B, A, C);
+//         }
+//     }
+
+//     return answer;
+// }
+
+// // 아래는 테스트로 출력해 보기 위한 코드입니다.
+// console.log(hanoi(2));
