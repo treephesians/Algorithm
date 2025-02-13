@@ -1,29 +1,21 @@
 const fs = require("fs");
-// const input = fs.readFileSync("/dev/stdin").toString().trim().split(" ");
-const input = fs.readFileSync("../input.txt").toString().trim().split(" ");
+//const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const input = fs.readFileSync("boj/input.txt").toString().trim().split("\n");
 
-const [N, r, c] = input.map(Number);
+const [N, r, c] = input[0].split(" ").map(Number)
 
-function zTraversal(n, x, y) {
-    if (n === 0) return 0; // 가장 작은 크기가 되면 0 반환
-
-    let half = 1 << (n - 1); // 2^(n-1) 크기
-    let quadrantSize = half * half; // 한 사분면의 크기
-
-    if (x < half && y < half) {
-        // 1️⃣ 왼쪽 위 (0번째)
-        return zTraversal(n - 1, x, y);
-    } else if (x < half && y >= half) {
-        // 2️⃣ 오른쪽 위 (1번째)
-        return quadrantSize + zTraversal(n - 1, x, y - half);
-    } else if (x >= half && y < half) {
-        // 3️⃣ 왼쪽 아래 (2번째)
-        return 2 * quadrantSize + zTraversal(n - 1, x - half, y);
-    } else {
-        // 4️⃣ 오른쪽 아래 (3번째)
-        return 3 * quadrantSize + zTraversal(n - 1, x - half, y - half);
-    }
+function Z (N, r, c) {
+    if (N == 0) return 0;
+    const half_size = Math.pow(2, N - 1);
+    const numbers = half_size * half_size;
+    if (r < half_size && c < half_size) 
+        return Z(N - 1, r, c);
+    if (r < half_size && c >= half_size)
+        return numbers + Z(N - 1, r, c - half_size);
+    if (r >= half_size && c < half_size)
+        return 2 * numbers + Z(N - 1, r - half_size, c);
+    if (r >= half_size && c >= half_size)
+        return 3 * numbers + Z(N - 1, r - half_size, c - half_size);
 }
 
-// 결과 출력
-console.log(zTraversal(N, r, c));
+console.log(Z(N, r, c))
