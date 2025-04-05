@@ -46,4 +46,5 @@ class TrieNode {
     }
   
     return totalInputCount;
+    
   }
