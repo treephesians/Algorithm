@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "es-math": "file:es-math-1.0.0.tgz",
-    "git-docgen": "^1.0.2"
-  }
-}
