@@ -2,17 +2,15 @@ import sys
 
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
+N = int(input())
+A = list(map(int, input().split()))
 
-def Backtracking (arr, M):
-    if len(arr) == M:
-        print(*arr)
-    else:
-        for i in range(arr[-1] + 1, N + 1):
-            new_arr = arr[:]
-            new_arr.append(i)
-            Backtracking(new_arr, M)
+indexes = [1] * N
+for i in range(1, N):
+    max_index = 0
+    for j in range(0, i):
+        if A[i] > A[j]:
+            max_index = max(max_index, indexes[j])
+        indexes[i] = max_index + 1
 
-for i in range(1, N + 1):
-    arr = [i]
-    Backtracking(arr, M)
+print(max(indexes))
