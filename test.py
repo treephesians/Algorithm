@@ -4,28 +4,15 @@ input = sys.stdin.readline
 
 N = int(input())
 
-graph = [[] for _ in range(N + 1)]
-visited = [False] * (N + 1)
-arr = [0] * (N + 1)
+RGB = [[] for _ in range(N)] 
 
-for _ in range(N - 1):
-    v1, v2 = map(int, input().split())
-    graph[v1].append(v2)
-    graph[v2].append(v1)
+for i in range(N):
+    RGB[i] = list(map(int, input().split()))
+    if i == 0 : continue
+    for j in range(3):
+        RGB[i][j] += min(RGB[i - 1][(j + 1) % 3], RGB[i - 1][(j + 2) % 3])
 
-def DFS_stack(start):
-    stack = [start]
-    visited[start] = True
+print(min(RGB[-1]))
 
-    while stack:
-        parent = stack.pop()
-        for child in graph[parent]:
-            if not visited[child]:
-                visited[child] = True
-                arr[child] = parent
-                stack.append(child)
 
-DFS_stack(1)
 
-for i in range(2, N + 1):
-    print(arr[i])
