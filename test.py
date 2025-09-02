@@ -1,15 +1,6 @@
-import sys
+from collections import defaultdict
 
-input = sys.stdin.readline
-
-N = int(input())
-
-RGB = [[] for _ in range(N)] 
-
-for i in range(N):
-    RGB[i] = list(map(int, input().split()))
-    if i == 0 : continue
-    for j in range(3):
-        RGB[i][j] += min(RGB[i - 1][(j + 1) % 3], RGB[i - 1][(j + 2) % 3])
-
-print(min(RGB[-1]))
+arr = {1:"a", 2:"b"}
+d_arr = defaultdict(list)
+d_arr[3].append("c")
+print(d_arr)
