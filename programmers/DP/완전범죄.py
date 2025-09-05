@@ -17,9 +17,3 @@ info = [[3, 3], [3, 3]]
 n = 6
 m = 1
 print(solution(info, n, m))
-
-#[1, 2] a a b b b 
-#[2, 3] a b a b b
-#[2, 1] b a b a b
-#       3 3 2
-#       1 3 3
